@@ -1,18 +1,18 @@
 {
   "submissions": [
     {
-      "name": "John Doe",
-      "email": "johndoe@gmail.com",
-      "phone": "9876543210",
-      "github_link": "https://github.com/john_doe/my_slidely_task/",
-      "stopwatch_time": "00:00:12"
-    },
-    {
       "name": "Ashmit ",
       "email": "ashmit@example",
       "phone": "2365987412",
       "github_link": "www.google.com",
       "stopwatch_time": "00:00:16"
+    },
+    {
+      "name": "Test123",
+      "email": "Test@123`",
+      "phone": "123456890",
+      "github_link": "www.spotify.con",
+      "stopwatch_time": "00:00:21"
     }
   ]
 }

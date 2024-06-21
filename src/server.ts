@@ -23,7 +23,6 @@ app.get("/ping", (req: Request, res: Response) => {
 
 app.post("/submit", (req: Request, res: Response) => {
   const { name, email, phone, github_link, stopwatch_time } = req.body;
-  console.log(req.body);
   const newSubmission = { name, email, phone, github_link, stopwatch_time };
 
   const db = readDatabase();
@@ -34,8 +33,33 @@ app.post("/submit", (req: Request, res: Response) => {
 });
 
 app.get("/read", (req: Request, res: Response) => {
+  const { index } = req.query;
   const db = readDatabase();
-  res.send(db.submissions);
+
+  if (index !== undefined) {
+    const submissionIndex = parseInt(index as string, 10);
+    if (submissionIndex >= 0 && submissionIndex < db.submissions.length) {
+      res.send(db.submissions[submissionIndex]);
+    } else {
+      res.status(404).send({ error: "Submission not found" });
+    }
+  } else {
+    res.send(db.submissions);
+  }
+});
+
+app.delete("/delete", (req: Request, res: Response) => {
+  const { index } = req.query;
+  const submissionIndex = parseInt(index as string, 10);
+  const db = readDatabase();
+
+  if (submissionIndex >= 0 && submissionIndex < db.submissions.length) {
+    db.submissions.splice(submissionIndex, 1);
+    writeDatabase(db);
+    res.send({ success: true });
+  } else {
+    res.status(404).send({ error: "Submission not found" });
+  }
 });
 
 app.listen(port, () => {
