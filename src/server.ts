@@ -33,32 +33,33 @@ app.post("/submit", (req: Request, res: Response) => {
 });
 
 app.get("/read", (req: Request, res: Response) => {
-  const { index } = req.query;
   const db = readDatabase();
-
-  if (index !== undefined) {
-    const submissionIndex = parseInt(index as string, 10);
-    if (submissionIndex >= 0 && submissionIndex < db.submissions.length) {
-      res.send(db.submissions[submissionIndex]);
-    } else {
-      res.status(404).send({ error: "Submission not found" });
-    }
-  } else {
-    res.send(db.submissions);
-  }
+  res.send(db.submissions);
 });
 
 app.delete("/delete", (req: Request, res: Response) => {
-  const { index } = req.query;
-  const submissionIndex = parseInt(index as string, 10);
+  const index = parseInt(req.query.index as string, 10);
+  const db = readDatabase();
+  if (index >= 0 && index < db.submissions.length) {
+    db.submissions.splice(index, 1);
+    writeDatabase(db);
+    res.status(200).send({ message: "Submission deleted successfully" });
+  } else {
+    res.status(404).send({ message: "Submission not found" });
+  }
+});
+
+app.put("/edit", (req: Request, res: Response) => {
+  const index = parseInt(req.query.index as string, 10);
+  const { name, email, phone, github_link, stopwatch_time } = req.body;
   const db = readDatabase();
 
-  if (submissionIndex >= 0 && submissionIndex < db.submissions.length) {
-    db.submissions.splice(submissionIndex, 1);
+  if (index >= 0 && index < db.submissions.length) {
+    db.submissions[index] = { name, email, phone, github_link, stopwatch_time };
     writeDatabase(db);
-    res.send({ success: true });
+    res.status(200).send({ message: "Submission updated successfully" });
   } else {
-    res.status(404).send({ error: "Submission not found" });
+    res.status(404).send({ message: "Submission not found" });
   }
 });
 

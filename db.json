@@ -5,14 +5,14 @@
       "email": "ashmit@example",
       "phone": "2365987412",
       "github_link": "www.google.com",
-      "stopwatch_time": "00:00:16"
+      "stopwatch_time": "00:00:11"
     },
     {
       "name": "Test123",
       "email": "Test@123`",
       "phone": "123456890",
-      "github_link": "www.spotify.con",
-      "stopwatch_time": "00:00:21"
+      "github_link": "www.spotify.com",
+      "stopwatch_time": "00:00:16"
     }
   ]
 }
